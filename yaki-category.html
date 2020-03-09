@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>焼肉ジャンボ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <style >
+    *{
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    .header{
+      width:100%;
+      height:45px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding:0px 10px 0px 10px;
+      color:#232455;
+      font-size:0.9em;
+      letter-spacing: 2px;
+
+    }
+    .category-wrap{
+      background: #F6F6F6;
+    }
+    .drink-menu{
+      height:auto;
+    }
+    .category{
+      height:auto;
+      padding:20px 0px 20px 0px;
+      width:93%;
+      margin: 0 auto;
+    }
+    .drink,.cuisin,.vegetable,.yakiniku{
+      width:100%;
+      height:180px;
+      margin: 0 auto;
+      border-radius: 30px;
+      margin-bottom:10px;
+    }
+    .category h3{
+      color:white;
+      text-align: center;
+      line-height: 200px;
+      font-size:2em;
+    }
+    .drink{
+      background-image:url("../img/beer.jpg");
+      background-size:cover;
+      background-position-y:-85px;
+    }
+    .cuisin{
+      background-image: url("../img/ryori.jpg");
+      background-size:cover;
+      background-position-y:-80px;
+    }
+    .vegetable{
+      background-image: url("../img/yasai.jpg");
+      background-size:cover;
+      background-position-y:-30px;
+    }
+    .yakiniku{
+      background-image: url("../img/niku.jpg");
+      background-size:cover;
+    }
+    .modal{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: white;
+      z-index: 10;
+      display: none;
+      height: 100vh;
+    }
+    .modal-body{
+      height:100%;
+    }
+    #modal-body{
+      height: auto;
+    }
+    .category #modal-body div{
+      width:100%;
+      height:180px;
+      margin: 0 auto;
+      border-radius: 30px;
+      margin-bottom:10px;
+    }
+
+    .beer{
+      background-image:url("../img/beer.jpg");
+      background-size:cover;
+      background-position-y:-85px;
+    }
+    .japanese-sake{
+      background-image: url("../img/日本酒.jpg");
+      background-size:cover;
+    }.uisuki-{
+      background-image: url("../img/uisuki-.jpg");
+      background-size:cover;
+    }.sour{
+      background-image: url("../img/サワー.jpg");
+      background-size:cover;
+    }.shochu{
+      background-image: url("../img/焼酎.jpg");
+      background-size:cover;
+    }.fruit-sake{
+      background-image: url("../img/果実酒.jpg");
+      background-size:cover;
+    }.makkori{
+      background-image: url("../img/マッコリ.jpg");
+      background-size:cover;
+    }.softdrink{
+      background-image: url("https://www.marche.co.jp/choh/wp-content/uploads/20180615.jpg");
+      background-size:cover;
+      background-position-y:0px;;
+    }
+
+    .modal-yakiniku-header{
+      height:120px;
+      width:100%;
+      padding:10px 20px 10px 20px;
+      background-image: url("../img/niku.jpg");
+      background-size:cover;
+      background-position-y:-85px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #close-modal-yakiniku{
+      color:white;
+    }
+    .modal-yakiniku-header h3{
+      color:white;
+      margin-left:-20px;
+      letter-spacing: 2px;
+    }
+    .modal-yakiniku-body{
+      height:auto;
+      width: 100%;
+      background-color: white;
+    }
+    .yakiniku-element{
+      height:auto;
+      width: 85%;
+      margin:0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top:20px;
+      margin-bottom: 40px;
+    }.yakiniku-element-n{
+      height:auto;
+      width: 85%;
+      margin:0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top:20px;
+      margin-bottom: 150px;
+    }
+    .yakiniku-image{
+      width:100%;
+      height:200px;
+      background-size:cover;
+      padding:5px 10px 5px 10px ;
+    }
+    .tan{
+      background-image: url("../img/tan.jpg");
+      background-position-y:-80px;
+    }.hatsu{
+      background-image:url("../img/ハツ.jpg");
+      background-position-y:-80px;
+    }.nohara{
+      background-image: url("../img/nohara.jpg");
+      background-position-x:-10px;
+    }
+    .yakiniku-image h3 {
+      float: left;
+    }
+    .star{
+      float: right;
+      width:auto;
+      height: auto;
+      padding:5px 6px 5px 6px;
+      margin: 5px 0px;
+      background-color:white;
+      border-radius: 20px;
+    }.star i{
+      color:yellow;
+      float:left;
+      font-size: 0.7em;
+      margin-right: 5px;
+    }.star p{
+      float:right;
+      font-size:1px;
+      margin-right: 5px;
+    }
+    .yakiniku-names{
+      height:50px;
+      width:100%;
+      padding:5px 10px 5px 10px;
+      background-color: #EEEEEE	;
+      display: flex;
+      justify-content: space-between;
+    }.yakiniku-names-left{
+      height:100%;
+      width:150px;
+      float:left;
+      line-height: 20px;
+    }.yakiniku-names-left h4:first-child{
+      color:#232455;
+      font-weight: bolder;
+      font-size:1em;
+    }.yakiniku-names-left h4{
+      color:#444444	;
+      font-size: 0.8em;
+
+    }.yakiniku-names-right{
+      width:180px;
+      height:100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color:#232455;
+    }.yakiniku-names-right h2{
+      font-size:1.5em;
+      font-weight: bolder;
+    }.yakiniku-names-right h4{
+      font-size:1.2em;
+    }
+    .add-btn{
+      height:40px;
+      width:60px;
+      background-color:#232455;
+      text-align: center;
+      border-radius: 10px;
+      padding-top:10px;
+    }.add-btn h4{
+      color:white;
+      max-height:100%;
+    }
+    .clear{
+      clear: both;
+    }
+    #modal-yakiniku{
+      height:auto;
+    }
+    .check-btn{
+      width:100%;
+      height: 70px;
+      color:white;
+      font-size:1.4em;
+      cursor: pointer;
+      background-color: black;
+      line-height:70px;
+      text-align: center;
+      position: fixed;  /* 位置を固定させます。 */
+      bottom:0px;     /* 画面の下端から20px空けます。 */
+      margin: 0 auto;
+      border-radius:5px;
+    }
+    .modal .detail{
+      height: 100vh;
+      position: fixed;
+    }
+    .modal-detail-image{
+      background-position-y:-10px;;
+      width:100%;
+      height:300px;
+    }.modal-detail-image i{
+      float:right;
+      color:white;
+      margin: 10px 12px 0px 0px;
+      opacity: 0.8;
+    }
+    #tan-di{
+      background-image: url("../img/tan.jpg");
+      background-size:cover;
+    }#hatsu-di{
+      background-image: url("../img/ハツ.jpg");
+      background-size:cover;
+      background-position-y:-60px;
+    }#nohara-di{
+      background-image: url("../img/nohara.jpg");
+      background-size:cover;
+      background-position-x:-60px;
+    }
+    .modal-detail-description{
+      height:55%;
+      width:100%;
+    }.mdd-title{
+      width:85%;
+      height:70px;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      margin-top:20px;
+    }
+    .modal-detail-description h1,.modal-detail-description p{
+      width: 85%;
+      margin: 0 auto;
+      margin-bottom:20px
+    }
+    .mdd-title-left{
+      float:left;
+    }.mdd-title-left h2{
+      font-size:1.5em;
+      color:#232455;
+    }.mdd-title-left h4{
+      color: #444444;
+      margin:5px 0px 25px 0px;
+      font-size:0.8em;
+    }
+    .figure{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0 auto;
+      width: 100px;
+      height:auto;
+      color:#232455;
+    }.figure h2{
+      font-size:1.5em;
+    }.figure h4{
+      font-size:1.2em;
+    }
+    #star{
+      width:50px;
+      margin-right:-150px;
+      display: flex;
+      flex-direction: row;
+      height:23px;
+      background-color:#EEEEEE;
+      border-radius:20px;
+    }
+
+
+    </style>
+  </head>
+  <body>
+    <section >
+      <div class="header">
+        <a href="http://rakupos.jellybean.jp/yaki-lang.html"><i class="fas fa-angle-left fa-2x"></i></a>
+
+        <h3>Category</h3>
+        <i class="fas fa-search fa-1.5x"></i>
+      </div>
+      <div class="drink-menu">
+        <div class="category">
+          <div id="modalOpen" class="drink">
+            <h3>ドリンク</h3>
+          </div>
+          <div class="modal" id="modal">
+              <div class="header">
+                <div class="">
+
+                </div>
+                <h4 style="font-size:1.6em; margin-right:-30px; margin-bottom:-10px;">ドリンク</h4>
+                <div id="close-modal">
+                  <i class="fas fa-times fa-3x"></i>
+                </div>
+              </div>
+              <div class="modal-body">
+                <div class="category" id="modal-body">
+                  <div class="beer">
+                    <h3>ビール</h3>
+                  </div>
+                  <div class="japanese-sake">
+                    <h3>日本酒</h3>
+                  </div>
+                  <div class="uisuki-">
+                    <h3>ウイスキー</h3>
+                  </div>
+                  <div class="sour">
+                    <h3>酎ハイ・サワー</h3>
+                  </div>
+                  <div class="shochu">
+                    <h3>本格焼酎</h3>
+                  </div>
+                  <div class="fruit-sake">
+                    <h3>果実酒</h3>
+                  </div>
+                  <div class="makkori">
+                    <h3>マッコリ</h3>
+                  </div>
+                  <div class="softdrink">
+                    <h3>ソフトドリンク</h3>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="cuisin">
+            <h3>一品料理</h3>
+          </div>
+          <div class="vegetable">
+            <h3>野菜・漬物</h3>
+          </div>
+          <div id="modalOpen-yakiniku" class="yakiniku">
+            <h3>焼肉</h3>
+          </div>
+          <div class="modal" id="modal-yakiniku">
+            <div class="modal-yakiniku-header">
+              <i class="fas fa-angle-left fa-4x" id="close-modal-yakiniku"></i>
+              <h3>焼肉</h3>
+              <div class="">  </div>
+            </div>
+            <div class="modal-yakiniku-body">
+              <div class="yakiniku-element" style="margin-top:20px;">
+                <div class="yakiniku-image tan" id="modalOpen-detail-tan">
+                  <h3 style="font-size:16px;line-height:20px; opacity:0.7;">詳細</h3>
+                  <div class="star">
+                    <i class="fas fa-star"></i>
+                    <p>×5</p>
+                    <div class="clear"></div>
+                  </div>
+                  <div class="clear"></div>
+                </div>
+                <div class="yakiniku-names">
+                  <div class="yakiniku-names-left">
+                    <h4>上タン塩</h4>
+                    <h4>￥2,600</h4>
+                  </div>
+                  <div class="yakiniku-names-right">
+                    <h2>-</h2>
+                    <h4>1</h4>
+                    <h2>+</h2>
+                    <div class="add-btn">
+                      <h4 style="font-size:0.9em;letter-spacing:1px;">追加</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="modal-detail-tan" class="modal detail">
+                <div class="modal-detail-image" id="tan-di">
+                  <i  id="close-modal-tan" class="fas fa-times fa-3x"></i>
+                </div>
+                <div class="modal-detail-description">
+                  <div class="mdd-title">
+                    <div class="mdd-title-left">
+                      <h2>上タン塩</h2>
+                      <h4>￥2,600</h4>
+                    </div>
+                    <div class="star" id="star">
+                      <i class="fas fa-star"></i>
+                      <p>4.5</p>
+                      <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                  <h1>召し上がり方</h1>
+                  <p>網の真ん中ではなく端で、じっくり焼くことをお勧めします。片面の焼き色が着くまでじっく
+                      り焼き、タン特有の反り返りが確認できたら裏返して、しっかりと焼き色がつくまで、焼きましょう。</p>
+                  <div class="figure">
+                    <h2>-</h2>
+                    <h4>1</h4>
+                    <h2>+</h2>
+                  </div>
+
+                </div>
+              </div>
+              <div class="yakiniku-element">
+                <div class="yakiniku-image hatsu" id="modalOpen-detail-hatsu">
+                  <h3 style="font-size:16px;line-height:20px;opacity:0.7;">詳細</h3>
+                  <div class="star" id="star">
+                    <i class="fas fa-star"></i>
+                    <p>×5</p>
+                  </div>
+                </div>
+                <div class="yakiniku-names">
+                  <div class="yakiniku-names-left">
+                    <h4>ハツ</h4>
+                    <h4>￥2,600</h4>
+                  </div>
+                  <div class="yakiniku-names-right">
+                    <h2>-</h2>
+                    <h4>1</h4>
+                    <h2>+</h2>
+                    <div class="add-btn">
+                      <h4 style="font-size:0.9em;letter-spacing:1px;">追加</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="modal-detail-hatsu" class="modal detail">
+                <div class="modal-detail-image" id="hatsu-di">
+                  <i  id="close-modal-hatsu" class="fas fa-times fa-3x"></i>
+                </div>
+                <div class="modal-detail-description">
+                  <div class="mdd-title">
+                    <div class="mdd-title-left">
+                      <h2>ハツ</h2>
+                      <h4>￥2,600</h4>
+                    </div>
+                    <div class="star" id="star">
+                      <i class="fas fa-star"></i>
+                      <p>4.5</p>
+                      <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                  <h1>召し上がり方</h1>
+                  <p>網の真ん中ではなく端で、じっくり焼くことをお勧めします。片面の焼き色が着くまでじっく
+                      り焼き、タン特有の反り返りが確認できたら裏返して、しっかりと焼き色がつくまで、焼きましょう。</p>
+                  <div class="figure">
+                    <h2>-</h2>
+                    <h4>1</h4>
+                    <h2>+</h2>
+                  </div>
+
+                </div>
+              </div>
+              <div class="yakiniku-element-n">
+                <div class="yakiniku-image nohara" id="modalOpen-detail-nohara">
+                  <h3 style="font-size:16px;line-height:20px;opacity:0.7;">詳細</h3>
+                  <div class="star">
+                    <i class="fas fa-star"></i>
+                    <p>×5</p>
+                  </div>
+                </div>
+                <div class="yakiniku-names">
+                  <div class="yakiniku-names-left">
+                    <h4>野原焼</h4>
+                    <h4>￥2,600</h4>
+                  </div>
+                  <div class="yakiniku-names-right">
+                    <h2>-</h2>
+                    <h4>1</h4>
+                    <h2>+</h2>
+                    <div class="add-btn">
+                      <h4 style="font-size:0.9em;letter-spacing:1px;">追加</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="modal-detail-nohara" class="modal detail">
+                <div class="modal-detail-image" id="nohara-di">
+                  <i  id="close-modal-nohara" class="fas fa-times fa-3x"></i>
+                </div>
+                <div class="modal-detail-description">
+                  <div class="mdd-title">
+                    <div class="mdd-title-left">
+                      <h2>野原焼</h2>
+                      <h4>￥2,600</h4>
+                    </div>
+                    <div class="star" id="star">
+                      <i class="fas fa-star"></i>
+                      <p>4.5</p>
+                      <div class="clear"></div>
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                  <h1>召し上がり方</h1>
+                  <p>網の真ん中ではなく端で、じっくり焼くことをお勧めします。片面の焼き色が着くまでじっく
+                      り焼き、タン特有の反り返りが確認できたら裏返して、しっかりと焼き色がつくまで、焼きましょう。</p>
+                  <div class="figure">
+                    <h2>-</h2>
+                    <h4>1</h4>
+                    <h2>+</h2>
+                  </div>
+
+                </div>
+              </div>
+              <div class="check-btn">
+                <h4>注文内容を確認する</h4>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script type="text/javascript">
+      $(function(){
+        $('#modalOpen').on('click',function(){
+          $('#modal').fadeIn();
+        });
+        $('#close-modal').on('click',function(){
+          $('#modal').fadeOut();
+        });
+        $('#modalOpen-yakiniku').on('click',function(){
+          $('#modal-yakiniku').fadeIn();
+        });
+        $('#close-modal-yakiniku').on('click',function(){
+          $('#modal-yakiniku').fadeOut();
+        });
+        $('#modalOpen-detail-tan').on('click',function(){
+          $('#modal-detail-tan').fadeIn();
+        });
+        $('#close-modal-tan').on('click',function(){
+          $('#modal-detail-tan').fadeOut();
+        });
+        $('#modalOpen-detail-hatsu').on('click',function(){
+          $('#modal-detail-hatsu').fadeIn();
+        });
+        $('#close-modal-hatsu').on('click',function(){
+          $('#modal-detail-hatsu').fadeOut();
+        });
+        $('#modalOpen-detail-nohara').on('click',function(){
+          $('#modal-detail-nohara').fadeIn();
+        });
+        $('#close-modal-nohara').on('click',function(){
+          $('#modal-detail-nohara').fadeOut();
+        });
+      });
+
+    </script>
+  </body>
+</html>
